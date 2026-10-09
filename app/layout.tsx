@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import BottomNav from "@/components/BottomNav";
+import DesktopHeader from "@/components/DesktopHeader";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -13,7 +14,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "QLTC - Quản Lý Chi Tiêu Cá Nhân",
-  description: "PWA Quản lý Chi tiêu tối ưu chuẩn Apple iPhone & Safari",
+  description: "PWA Quản lý Chi tiêu tối ưu chuẩn Apple iPhone, iPad & Desktop",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -28,27 +29,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className="dark bg-[#0a0a0c]">
-      <body className="bg-[#0a0a0c] text-white antialiased min-h-screen flex justify-center items-start selection:bg-emerald-500/20">
+    <html lang="vi" className="dark bg-[#07080a]">
+      <body className="bg-[#07080a] text-white antialiased min-h-screen flex flex-col selection:bg-emerald-500/20">
         {/*
-          Khung Mobile-First Container:
-          - Khống chế chiều rộng tối đa 430px (chuẩn iPhone 14/15 Pro)
-          - Căn giữa màn hình trên Desktop
-          - Nền ngoài tối (Dark Gray #0a0a0c), nền trong đen OLED chân thực (bg-black)
-          - Ẩn toàn bộ thanh cuộn (no-scrollbar)
+          1. Desktop Navigation Header:
+          - Tự động hiển thị trên Desktop (md:block) và ẩn hoàn toàn trên Mobile
         */}
-        <div className="w-full max-w-[430px] min-h-screen bg-black relative flex flex-col shadow-[0_0_60px_rgba(0,0,0,0.85)] border-x border-neutral-900/60 no-scrollbar overflow-x-hidden">
-          {/* Vùng an toàn phía trên (Tai thỏ / Dynamic Island) */}
-          <div className="pt-safe w-full bg-black/40 backdrop-blur-md sticky top-0 z-40" />
+        <DesktopHeader />
 
-          {/* Nội dung chính của trang (chừa khoảng trống dưới cho Bottom Nav + Safe Area) */}
-          <main className="flex-1 pb-[calc(env(safe-area-inset-bottom,0px)+6rem)] px-4 pt-2">
-            {children}
-          </main>
+        {/* 2. Vùng an toàn phía trên cho iPhone (Tai thỏ / Dynamic Island) */}
+        <div className="md:hidden pt-safe w-full bg-black/40 backdrop-blur-md sticky top-0 z-40" />
 
-          {/* Thanh điều hướng cố định đáy Glassmorphism có FAB */}
-          <BottomNav />
-        </div>
+        {/*
+          3. Nội dung chính của trang (Full-Width Fluid Elastic Layout - Chuẩn Facebook):
+          - Mobile: Tự do co giãn theo chiều ngang điện thoại
+          - Desktop: Tràn viền 100% không giới hạn trần max-w, tự động mở rộng theo màn hình từ FHD, 2K, 4K đến Ultrawide
+        */}
+        <main className="flex-1 w-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 pt-2 sm:pt-6 pb-[calc(env(safe-area-inset-bottom,0px)+6rem)] md:pb-12">
+          {children}
+        </main>
+
+        {/* 4. Thanh điều hướng cố định đáy Glassmorphism (Chỉ hiện trên thiết bị di động) */}
+        <BottomNav />
       </body>
     </html>
   );

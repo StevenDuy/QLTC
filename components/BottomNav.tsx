@@ -21,16 +21,16 @@ export default function BottomNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] z-40 select-none"
-      aria-label="Thanh điều hướng ứng dụng"
+      className="md:hidden fixed bottom-0 left-0 right-0 w-full z-40 select-none"
+      aria-label="Thanh điều hướng ứng dụng di động"
     >
       {/* 
-        Glassmorphism bar theo yêu cầu:
-        bg-white/10 backdrop-blur-md border-t border-white/20
+        Glassmorphism bar cho Mobile:
+        bg-black/60 backdrop-blur-xl border-t border-white/10
         Chừa khoảng an toàn pb-safe cho thanh Home Indicator của Apple iOS
       */}
-      <div className="bg-white/10 backdrop-blur-md border-t border-white/20 px-6 pt-2 pb-safe shadow-[0_-8px_32px_rgba(0,0,0,0.5)]">
-        <div className="flex items-center justify-between relative h-14">
+      <div className="bg-black/70 backdrop-blur-2xl border-t border-white/10 px-6 pt-2 pb-safe shadow-[0_-8px_32px_rgba(0,0,0,0.6)]">
+        <div className="max-w-md mx-auto flex items-center justify-between relative h-14">
           {/* Tab 1: Tổng quan */}
           <button
             onClick={() => setActiveTab(navItems[0].id)}
